@@ -48,7 +48,8 @@ void pretty_print(
 template <class T>
 void copy_first(const std::vector<std::pair<T, T>> &pairs, std::vector<T> &results) {
   for (size_t i = 0; i < pairs.size(); i++) {
-    results[i] = pairs[i].first;
+    auto [a, b] = pairs[i];
+    results[i] = a;
   }
 }
 
@@ -56,35 +57,40 @@ void copy_first(const std::vector<std::pair<T, T>> &pairs, std::vector<T> &resul
 template <class T>
 void multiple(const std::vector<std::pair<T, T>> &pairs, std::vector<T> &results) {
   for (size_t i = 0; i < pairs.size(); i++) {
-    results[i] = pairs[i].first * pairs[i].second;
+    auto [a, b] = pairs[i];
+    results[i] = a*b;
   }
 }
 
 template <class T>
 void add(const std::vector<std::pair<T, T>> &pairs, std::vector<T> &results) {
   for (size_t i = 0; i < pairs.size(); i++) {
-    results[i] = pairs[i].first + pairs[i].second;
+    auto [a, b] = pairs[i];
+    results[i] = a + b;
   }
 }
 
 template <class T>
 void subtract(const std::vector<std::pair<T, T>> &pairs, std::vector<T> &results) {
   for (size_t i = 0; i < pairs.size(); i++) {
-    results[i] = pairs[i].first - pairs[i].second;
+    auto [a, b] = pairs[i];
+    results[i] = a-b;
   }
 }
 
 template <class T>
 void divide(const std::vector<std::pair<T, T>> &pairs, std::vector<T> &results) {
   for (size_t i = 0; i < pairs.size(); i++) {
-    results[i] = pairs[i].first / pairs[i].second;
+    auto [a, b] = pairs[i];
+    results[i] = a / b;
   }
 }
 
 template <class T>
 void square_root(const std::vector<std::pair<T, T>> &pairs, std::vector<T> &results) {
   for (size_t i = 0; i < pairs.size(); i++) {
-    results[i] = std::sqrt(pairs[i].first);
+    auto [a, b] = pairs[i];
+    results[i] = std::sqrt(a);
   }
 }
 
@@ -132,9 +138,9 @@ int main(int argc, char **argv) {
   }
   auto pairs_double = get_random_pairs<double>(howmany);
   auto pairs_float = get_random_pairs<float>(howmany);
-  for (int i = 0; i < 10; i++) {
-    printf(" %f %f\n", pairs_double[i].first, pairs_double[i].second);
-  }
+  // for (int i = 0; i < 10; i++) {
+  //   printf(" %f %f\n", pairs_double[i].first, pairs_double[i].second);
+  // }
 
   pretty_print("double", pairs_double.size(), "double_copy_first",
                time_it_ns(pairs_double, copy_first<double>, repeat));
@@ -162,6 +168,10 @@ int main(int argc, char **argv) {
                 time_it_ns(pairs_float, divide<float>, repeat));
   pretty_print("float", pairs_float.size(), "float_square_root",
                 time_it_ns(pairs_float, square_root<float>, repeat));    
+  if(!collector.has_events()) {
+    std::cerr << "I cannot access the performance counters. Make sure you run the program in privileged mode (e.g., sudo) under Linux our macOS/ARM." << std::endl;
+    return 1;
+  }
   return 0;
 }
 
