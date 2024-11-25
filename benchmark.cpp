@@ -132,6 +132,9 @@ int main(int argc, char **argv) {
   }
   auto pairs_double = get_random_pairs<double>(howmany);
   auto pairs_float = get_random_pairs<float>(howmany);
+  for (int i = 0; i < 10; i++) {
+    printf(" %f %f\n", pairs_double[i].first, pairs_double[i].second);
+  }
 
   pretty_print("double", pairs_double.size(), "double_copy_first",
                time_it_ns(pairs_double, copy_first<double>, repeat));
