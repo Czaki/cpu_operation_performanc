@@ -2,6 +2,7 @@
 
 #include <random>
 #include <vector>
+#include <iostream>
 
 event_collector collector;
 
