@@ -64,6 +64,14 @@ void multiple(const std::vector<std::pair<T, T>> &pairs, std::vector<T> &results
 }
 
 template <class T>
+void square(const std::vector<std::pair<T, T>> &pairs, std::vector<T> &results) {
+  for (size_t i = 0; i < pairs.size(); i++) {
+    auto [a, b] = pairs[i];
+    results[i] = a*a;
+  }
+}
+
+template <class T>
 void add(const std::vector<std::pair<T, T>> &pairs, std::vector<T> &results) {
   for (size_t i = 0; i < pairs.size(); i++) {
     auto [a, b] = pairs[i];
@@ -151,6 +159,8 @@ int main(int argc, char **argv) {
                time_it_ns(pairs_double, subtract<double>, repeat));
   pretty_print("double", pairs_double.size(), "double_multiply",
                 time_it_ns(pairs_double, multiple<double>, repeat));
+  pretty_print("double", pairs_double.size(), "double_square",
+                time_it_ns(pairs_double, square<double>, repeat));
   pretty_print("double", pairs_double.size(), "double_divide",
                 time_it_ns(pairs_double, divide<double>, repeat));
   pretty_print("double", pairs_double.size(), "double_square_root",
@@ -165,6 +175,8 @@ int main(int argc, char **argv) {
                 time_it_ns(pairs_float, subtract<float>, repeat));
   pretty_print("float", pairs_float.size(), "float_multiply",
                 time_it_ns(pairs_float, multiple<float>, repeat));
+  pretty_print("float", pairs_float.size(), "float_square",
+                time_it_ns(pairs_float, square<float>, repeat));
   pretty_print("float", pairs_float.size(), "float_divide",
                 time_it_ns(pairs_float, divide<float>, repeat));
   pretty_print("float", pairs_float.size(), "float_square_root",
